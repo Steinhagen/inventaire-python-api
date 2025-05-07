@@ -1,0 +1,19 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+requests = "*"
+
+[dev-packages]
+pytest = "*"
+tox = "*"
+pytest-mock = "*"
+pylint = "*"
+build = "*"
+twine = "*"
+tox-gh-actions = "*"
+sphinx = "*"
+sphinx-rtd-theme = "*"
+myst-parser = "*"
