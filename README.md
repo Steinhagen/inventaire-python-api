@@ -6,8 +6,7 @@
 
 ### Project description
 
-The package is a set of python wrappers for Inventaire.
-Interact with Inventaire using python and create automation scripts to keep your library and database up-to-date.
+This package makes it easy to use Inventaire with Python. You can write simple scripts to manage your library and keep your database up to date automatically.
 
 For more detailed information please see [the project's documentation](https://inventaire-python-api.readthedocs.io/en/latest/index.html).
 
@@ -74,10 +73,6 @@ items = iapi.items
 # Shelves
 shelves = iapi.shelves
 ```
-
-## Troubleshooting
-
-For troubleshooting see [TROUBLESHOOTING.md](TROUBLESHOOTING.md)
 
 ## License
 

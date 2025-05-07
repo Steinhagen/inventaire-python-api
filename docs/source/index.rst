@@ -6,8 +6,7 @@
 Welcome to Inventaire Python API's documentation!
 =============================================
 
-The package is a set of python wrappers for Inventaire.
-Interact with Inventaire using python and create automation scripts to keep your library and database up-to-date.
+This package makes it easy to use Inventaire with Python. You can write simple scripts to manage your library and keep your database up to date automatically.
 
 The idea of the package is to have two parts in it: a set of low-level wrappers and Inventaire objects (like entities or users).
 The low-level wrappers simply perform requests to the API endpoints.
