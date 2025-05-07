@@ -272,6 +272,90 @@ class GroupsEndpoints(EndpointTemplate):
         """
         raise NotImplementedError
 
+    def get_group_by_id(self, **params):
+        """
+        Get a group by its id.
+        """
+        raise NotImplementedError
+
+    def get_group_by_slug(self, **params):
+        """
+        Get a group by its slug.
+        """
+        raise NotImplementedError
+
+    def get_groups_by_username(self, **params):
+        """
+        Groups by usernames.
+        """
+        raise NotImplementedError
+
+    def invite(self, **params):
+        """
+        Invite a user to join the group.
+        """
+        raise NotImplementedError
+
+    def accept(self, **params):
+        """
+        Accept an invitation to join a group.
+        """
+        raise NotImplementedError
+
+    def decline(self, **params):
+        """
+        Decline an invitation to join a group.
+        """
+        raise NotImplementedError
+
+    def request(self, **params):
+        """
+        Request to join the group.
+        """
+        raise NotImplementedError
+
+    def cancel_request(self, **params):
+        """
+        Cancel the authentified user request to join a group.
+        """
+        raise NotImplementedError
+
+    def accept_request(self, **params):
+        """
+        Accept a user request to join the group.
+        """
+        raise NotImplementedError
+
+    def refuse_request(self, **params):
+        """
+        Refuse a user request to join the group.
+        """
+        raise NotImplementedError
+
+    def make_admin(self, **params):
+        """
+        Give admin right to a non-admin member.
+        """
+        raise NotImplementedError
+
+    def kick(self, **params):
+        """
+        Remove a user from the group.
+        """
+        raise NotImplementedError
+
+    def leave_group(self, **params):
+        """
+        Leave a group.
+        """
+        raise NotImplementedError
+
+    def update_group_settings(self, **params):
+        """
+        Update the group settings.
+        """
+        raise NotImplementedError
+
 
 class TransactionsEndpoints(EndpointTemplate):
     """
@@ -448,6 +532,18 @@ class ShelvesEndpoints(EndpointTemplate):
         json = {"id": id}
         merged_json = dict_merge(data, json)
         return self.session.post(Paths.SHELVES_DELETE, json=merged_json)
+
+    def add_items(self, **params):
+        """
+        Add items to a shelf.
+        """
+        raise NotImplementedError
+
+    def remove_items(self, **params):
+        """
+        Remove items from a shelf.
+        """
+        raise NotImplementedError
 
 
 class DataEndpoints(EndpointTemplate):
