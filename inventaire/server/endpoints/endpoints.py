@@ -47,6 +47,13 @@ class UserEndpoints(EndpointTemplate):
     def update_authentified_user(self, attribute: str, value: str):
         """
         Update the authentified user.
+
+        Args:
+            attribute (str): The attribute to update (username, email, language, bio, settings, position).
+            value (str): The new value to give to this attribute.
+
+        Returns:
+            Response: The response object from the PUT request.
         """
         json = {"attribute": attribute, "value": value}
         return self.session.put(Paths.USERS, json=json)
@@ -254,6 +261,19 @@ class EntitiesEndpoints(EndpointTemplate):
         Restores an entity to a past version.
         """
         raise NotImplementedError
+
+    def move_to_wikidata(self, uri: str):
+        """
+        Move an inventaire entity to Wikidata.
+
+        Args:
+            uri (str): Entity URI (e.g., 'inv:60044095fc153704829f47af07a1517e').
+
+        Returns:
+            Response: The response object resulting from the GET request to the shelves endpoint.
+        """
+        json = {"uri": uri}
+        return self.session.put(Paths.ENTITY_MOVE_WIKIDATA, json=json)
 
 
 class UsersEndpoints(EndpointTemplate):

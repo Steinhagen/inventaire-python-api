@@ -36,6 +36,7 @@ class InventairePaths:
     ENTITY_PUBLISHER = "entities?action=publisher-publications"
     ENTITY_REVERT_EDIT = "entities?action=revert-edit"
     ENTITY_RESTORE_VERSION = "entities?action=restore-version"
+    ENTITY_MOVE_WIKIDATA = "entities?action=move-to-wikidata"
 
     # Users
     USERS_BY_IDS = "users?action=by-ids"
