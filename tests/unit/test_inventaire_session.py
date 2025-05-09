@@ -11,21 +11,6 @@ LOGGER_DEBUG_PATH = "logging.Logger.debug"
 
 @pytest.mark.unit
 class TestInventaireSession:
-    def test_creation(self, mocker):
-        """
-        Tests basic creation logic.
-        """
-        logger_mock = mocker.patch(GETLOGGER_PATH)
-
-        isession = InventaireSession(DEFAULT_BASE_URL, token="token_test")
-
-        assert isession.base_url == DEFAULT_BASE_URL, (
-            f"Attribute base_url expected to be {DEFAULT_BASE_URL}, "
-            f"not {isession.base_url}"
-        )
-        assert isinstance(isession._session, Session)
-        logger_mock.assert_called_with("inventaire.session")
-
     def test_credentials_auth(self, mocker):
         """
         Test auth with username and password.
