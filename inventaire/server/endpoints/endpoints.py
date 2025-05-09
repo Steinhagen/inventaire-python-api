@@ -202,7 +202,7 @@ class EntitiesEndpoints(EndpointTemplate):
             refresh (bool, optional): Request non-cached data. Defaults to 'False'.
 
         Returns:
-            Response: The response object from the GET request to retrieve the extract.
+            Response: The response object from the GET request.
         """
         params = {"uris": "|".join(uris) if isinstance(uris, list) else uris}
         if refresh:
@@ -217,7 +217,7 @@ class EntitiesEndpoints(EndpointTemplate):
             id (str): An (internal) entity id (e. g., 'd59e3e64f92c6340fbb10c5dcf437d86').
 
         Returns:
-            Response: The response object from the GET request to retrieve the extract.
+            Response: The response object from the GET request.
         """
         params = {"id": id}
         return self.session.get(Paths.ENTITY_HISTORY, params=params)
@@ -231,7 +231,7 @@ class EntitiesEndpoints(EndpointTemplate):
             refresh (bool, optional): Request non-cached data. Defaults to 'False'.
 
         Returns:
-            Response: The response object from the GET request to retrieve the extract.
+            Response: The response object from the GET request.
         """
         params = {"uri": uri}
         if refresh:
@@ -311,7 +311,7 @@ class UsersEndpoints(EndpointTemplate):
             search (str): Text matching users username or bio.
 
         Returns:
-            Response: The response object from the GET request to retrieve the extract.
+            Response: The response object from the GET request.
         """
         params = {"search": search}
         return self.session.get(Paths.USERS_SEARCH, params=params)
@@ -420,17 +420,27 @@ class TransactionsEndpoints(EndpointTemplate):
     - code: https://github.com/inventaire/inventaire/blob/master/server/controllers/transactions/transactions.js
     """
 
-    def get_transactions(self, **params):
+    def get_transactions(self):
         """
         Get the authentified user transactions data.
-        """
-        raise NotImplementedError
 
-    def get_transaction_messages(self, **params):
+        Returns:
+            Response: The response object resulting from the GET request to the shelves endpoint.
+        """
+        return self.session.get(Paths.TRANSACTIONS)
+
+    def get_transaction_messages(self, transaction: str):
         """
         Get messages associated to a transaction.
+
+        Args:
+            transaction (str): A transaction id (e. g., '85d797f862e362335f3e6144cc12568a').
+
+        Returns:
+            Response: The response object from the GET request.
         """
-        raise NotImplementedError
+        params = {"transaction": transaction}
+        return self.session.get(Paths.TRANSACTIONS_MESSAGES, params=params)
 
 
 class SearchEndpoints(EndpointTemplate):
@@ -632,7 +642,7 @@ class DataEndpoints(EndpointTemplate):
             isbn (str): 10 or 13, with or without hyphen.
 
         Returns:
-            Response: The response object from the GET request to retrieve the extract.
+            Response: The response object from the GET request.
         """
         params = {"isbn": isbn}
         return self.session.get(Paths.DATA_ISBN, params=params)
@@ -646,7 +656,7 @@ class DataEndpoints(EndpointTemplate):
             type (str): A type from lib/wikidata/aliases (e. g., 'series').
 
         Returns:
-            Response: The response object from the GET request to retrieve the extract.
+            Response: The response object from the GET request.
         """
         params = {"property": property, "type": type}
         return self.session.get(Paths.DATA_PROPERTY_VALUES, params=params)
