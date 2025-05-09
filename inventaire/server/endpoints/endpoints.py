@@ -180,35 +180,56 @@ class EntitiesEndpoints(EndpointTemplate):
         params = dict_merge(data, params)
         return self.session.get(Paths.ENTITY_BY_URIS, params=params)
 
-    def get_last_changes(self, **params):
-        """
-        Get entities last changes.
-        """
-        raise NotImplementedError
-
     def get_entities_by_claims(self, **params):
         """
         Get entities URIs by their claims.
         """
         raise NotImplementedError
 
-    def get_popularity(self, **params):
+    def get_popularity(self, uris: str | list[str], refresh: bool = False):
         """
         Get popularity score of an entity.
-        """
-        raise NotImplementedError
 
-    def get_history(self, **params):
+        Args:
+            uris (str or list[str]): A title, author, or ISBN separated by pipes or a list of elements (e.g., 'wd:Q3203603|isbn:9782290349229|inv:d59e3e64f92c6340fbb10c5dcf437d86').
+            refresh (bool, optional): Request non-cached data. Defaults to 'False'.
+
+        Returns:
+            Response: The response object from the GET request to retrieve the extract.
+        """
+        params = {"uris": "|".join(uris) if isinstance(uris, list) else uris}
+        if refresh:
+            params["refresh"] = str_bool(refresh)
+        return self.session.get(Paths.ENTITY_POPULARITY, params=params)
+
+    def get_history(self, id: str):
         """
         Get entities history as snapshots and diffs.
-        """
-        raise NotImplementedError
 
-    def get_author_works(self, **params):
+        Args:
+            id (str): An (internal) entity id (e. g., 'd59e3e64f92c6340fbb10c5dcf437d86').
+
+        Returns:
+            Response: The response object from the GET request to retrieve the extract.
         """
-        Get an author's works.
+        params = {"id": id}
+        return self.session.get(Paths.ENTITY_HISTORY, params=params)
+
+    def get_author_works(self, uri: str, refresh: bool = False):
         """
-        raise NotImplementedError
+        Pass an author URI, get uris of all works, series and articles of the entity that match this claim
+
+        Args:
+            uris (str): An author URI (e. g. 'wd:Q2196').
+            refresh (bool, optional): Request non-cached data. Defaults to 'False'.
+
+        Returns:
+            Response: The response object from the GET request to retrieve the extract.
+        """
+        params = {"uri": uri}
+        if refresh:
+            params["refresh"] = str_bool(refresh)
+        return self.session.get(Paths.ENTITY_AUTHOR_WORKS, params=params)
 
     def get_serie_parts(self, **params):
         """
@@ -247,17 +268,33 @@ class UsersEndpoints(EndpointTemplate):
         """
         raise NotImplementedError
 
-    def get_users_by_usernames(self, **params):
+    def get_users_by_usernames(self, usernames: str | list[str]):
         """
         Users by usernames.
-        """
-        raise NotImplementedError
 
-    def search(self, **params):
+        Args:
+            usernames (str or list[str]): Usernames separated by pipes as a string or a list usernames.
+
+        Returns:
+            Response: The response object resulting from the GET request to the shelves endpoint.
+        """
+        users_str = "|".join(usernames) if isinstance(usernames, list) else usernames
+        return self.session.get(
+            Paths.USERS_BY_USERNAMES, params={"usernames": users_str}
+        )
+
+    def search(self, search):
         """
         Search users.
+
+        Args:
+            search (str): Text matching users username or bio.
+
+        Returns:
+            Response: The response object from the GET request to retrieve the extract.
         """
-        raise NotImplementedError
+        params = {"search": search}
+        return self.session.get(Paths.USERS_SEARCH, params=params)
 
 
 class GroupsEndpoints(EndpointTemplate):
