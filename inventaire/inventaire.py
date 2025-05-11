@@ -4,6 +4,7 @@ A module with the Inventaire base object.
 
 import logging
 
+from inventaire.server.helpers import InventaireHelpers
 from inventaire.server.server_api import InventaireApiWrapper
 from inventaire.session import InventaireSession
 
@@ -25,6 +26,7 @@ class Inventaire:
         session = InventaireSession(base_url=base_url, **kwargs)
         self.api = InventaireApiWrapper(session)
         self.api.auth.login_user(**kwargs)
+        self.helpers = InventaireHelpers(session)
 
         self.logger = logging.getLogger(__name__)
 
