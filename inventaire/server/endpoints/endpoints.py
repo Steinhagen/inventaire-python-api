@@ -1,3 +1,5 @@
+import copy
+
 from inventaire.session import InventaireSession
 from inventaire.utils.common import dict_merge, str_bool
 
@@ -65,11 +67,50 @@ class ItemsEndpoints(EndpointTemplate):
     - code: https://github.com/inventaire/inventaire/blob/master/server/controllers/items/items.js
     """
 
-    def create_item(self, **params):
+    def create_item(
+        self,
+        entity: str,
+        transaction: str = "inventorying",
+        listing: str = "private",
+        lang: str | None = None,
+        details: str | None = None,
+        notes: str | None = None,
+        data: dict | None = None,
+    ):
         """
         Create an item.
+
+        Parameters:
+            entity (str): The associated book entity (work or edition) uri (e.g. 'isbn:9782253138938').
+            transaction (str): The item transaction: one of giving, lending, selling, or inventorying. Defaults to inventorying.
+            listing (str): The item visibility listing: one of private, network, or public. Defaults to private.
+            lang (str, optional): 2-letters language code.
+            details (str, optional): Free text to be visible by anyone allowed to see the item.
+            notes (str, optional): Free text that is visible only by the item owner.
+            data (dict, optional): Additional parameters to include in the request.
+
+        Returns:
+            Response: The HTTP response object from the POST request.
         """
-        raise NotImplementedError
+        if data is None:
+            data = {}
+
+        json = {
+            "entity": entity,
+            **{
+                k: v
+                for k, v in {
+                    "transaction": transaction,
+                    "listing": listing,
+                    "lang": lang,
+                    "details": details,
+                    "notes": notes,
+                }.items()
+                if v is not None
+            },
+        }
+        json = dict_merge(data, json)
+        return self.session.post(Paths.ITEMS, json=json)
 
     def update_item(self, **params):
         """
@@ -121,11 +162,24 @@ class EntitiesEndpoints(EndpointTemplate):
     - code: https://github.com/inventaire/inventaire/blob/master/server/controllers/entities/entities.js
     """
 
-    def create_entity(self, **params):
+    def create_entity(self, labels: dict, claims: dict):
         """
         Create an entity.
+
+        Parameters:
+            labels (dict): An object with lang as key, and the associated label as value. e.g.:
+                {
+                  "en": "that entity's label in English",
+                  "fr": "le label de cette entité en français"
+                }
+            claims (dict): An object with properties URIs as keys, and, as value, the associated array of claim values. e.g.:
+                { "wdt:P31": [ "wd:Q571" ] }
+
+        Returns:
+            Response: The HTTP response object from the POST request.
         """
-        raise NotImplementedError
+        json = {"labels": labels, "claims": claims}
+        return self.session.post(Paths.ITEMS, json=json)
 
     def resolve_entity(self, **params):
         """
@@ -282,11 +336,18 @@ class UsersEndpoints(EndpointTemplate):
     - code: https://github.com/inventaire/inventaire/blob/master/server/controllers/users/users.js
     """
 
-    def get_users_by_ids(self, **params):
+    def get_users_by_ids(self, ids: str | list[str]):
         """
         Users by ids.
+
+        Args:
+            ids (str or list[str]): Ids separated by pipes as a string or a list ids.
+
+        Returns:
+            Response: The response object resulting from the GET request.
         """
-        raise NotImplementedError
+        ids_str = "|".join(ids) if isinstance(ids, list) else ids
+        return self.session.get(Paths.USERS_BY_IDS, params={"ids": ids_str})
 
     def get_users_by_usernames(self, usernames: str | list[str]):
         """
@@ -296,7 +357,7 @@ class UsersEndpoints(EndpointTemplate):
             usernames (str or list[str]): Usernames separated by pipes as a string or a list usernames.
 
         Returns:
-            Response: The response object resulting from the GET request to the shelves endpoint.
+            Response: The response object resulting from the GET request.
         """
         users_str = "|".join(usernames) if isinstance(usernames, list) else usernames
         return self.session.get(
