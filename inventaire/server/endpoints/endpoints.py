@@ -43,6 +43,9 @@ class UserEndpoints(EndpointTemplate):
     def get_authentified_user(self):
         """
         Get the authentified user data.
+
+        Returns:
+            Response: The response object from the GET request.
         """
         return self.session.get(Paths.USERS)
 
@@ -222,7 +225,7 @@ class EntitiesEndpoints(EndpointTemplate):
             data (dict, optional): Additional parameters to include in the request.
 
         Returns:
-            Response: The HTTP response object from the POST request.
+            Response: The response object from the GET request.
         """
         if data is None:
             data = {}
@@ -281,7 +284,7 @@ class EntitiesEndpoints(EndpointTemplate):
         Pass an author URI, get uris of all works, series and articles of the entity that match this claim
 
         Args:
-            uris (str): An author URI (e. g. 'wd:Q2196').
+            uri (str): An author URI (e. g. 'wd:Q2196').
             refresh (bool, optional): Request non-cached data. Defaults to 'False'.
 
         Returns:
@@ -292,11 +295,21 @@ class EntitiesEndpoints(EndpointTemplate):
             params["refresh"] = str_bool(refresh)
         return self.session.get(Paths.ENTITY_AUTHOR_WORKS, params=params)
 
-    def get_serie_parts(self, **params):
+    def get_serie_parts(self, uri: str, refresh: bool = False):
         """
         Get a serie's parts.
+
+        Args:
+            uri (str): A serie URI (e. g. 'wd:Q718449').
+            refresh (bool, optional): Request non-cached data. Defaults to 'False'.
+
+        Returns:
+            Response: The response object from the GET request.
         """
-        raise NotImplementedError
+        params = {"uri": uri}
+        if refresh:
+            params["refresh"] = str_bool(refresh)
+        return self.session.get(Paths.ENTITY_SERIE_PARTS, params=params)
 
     def get_publisher_publications(self, **params):
         """
@@ -387,20 +400,37 @@ class GroupsEndpoints(EndpointTemplate):
     def get_groups(self, **params):
         """
         Get all the groups the authentified user is a member of.
-        """
-        raise NotImplementedError
 
-    def get_group_by_id(self, **params):
+        Returns:
+            Response: The response object from the GET request.
+        """
+        return self.session.get(Paths.GROUPS)
+
+    def get_group_by_id(self, id: str):
         """
         Get a group by its id.
-        """
-        raise NotImplementedError
 
-    def get_group_by_slug(self, **params):
+        Args:
+            id (str): A group id (e. g. '85d797f862e362335f3e6144cc12568a').
+
+        Returns:
+            Response: The response object from the GET request.
+        """
+        params = {"id": id}
+        return self.session.get(Paths.GROUPS_BY_ID, params=params)
+
+    def get_group_by_slug(self, slug: str):
         """
         Get a group by its slug.
+
+        Args:
+            slug (str): A group slug (e. g. 'la-myne').
+
+        Returns:
+            Response: The response object from the GET request.
         """
-        raise NotImplementedError
+        params = {"slug": slug}
+        return self.session.get(Paths.GROUPS_BY_SLUG, params=params)
 
     def get_groups_by_username(self, **params):
         """
