@@ -53,3 +53,21 @@ uri_details = inv.api.entities.get_entities_by_uris(
     refresh=True,
 )
 print(uri_details)
+
+# Create a new inventaire collection, titled "Râsul lumii", with the romanian language and the "Humanitas" publisher
+collection_name = "Râsul lumii"
+claims = {
+    "wdt:P31": ["wd:Q20655472"],
+    "wdt:P1476": [collection_name],
+    "wdt:P407": ["wd:Q7913"],
+    "wdt:P123": ["wd:Q680566"],
+    "wdt:P856": [],
+    "wdt:P268": [],
+    "wdt:P921": [],
+    "wdt:P1581": [],
+    "wdt:P1680": [],
+    "wdt:P1889": [],
+}
+data = {"prefix": "inv"}
+collection_data = inv.api.entities.create_entity(labels={}, claims=claims, data=data)
+print(collection_data)

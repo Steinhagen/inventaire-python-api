@@ -165,7 +165,12 @@ class EntitiesEndpoints(EndpointTemplate):
     - code: https://github.com/inventaire/inventaire/blob/master/server/controllers/entities/entities.js
     """
 
-    def create_entity(self, labels: dict, claims: dict):
+    def create_entity(
+        self,
+        labels: dict,
+        claims: dict,
+        data: dict | None = None,
+    ):
         """
         Create an entity.
 
@@ -177,12 +182,17 @@ class EntitiesEndpoints(EndpointTemplate):
                 }
             claims (dict): An object with properties URIs as keys, and, as value, the associated array of claim values. e.g.:
                 { "wdt:P31": [ "wd:Q571" ] }
+            data (dict, optional): Additional parameters to include in the request.
 
         Returns:
             Response: The HTTP response object from the POST request.
         """
+        if data is None:
+            data = {}
+
         json = {"labels": labels, "claims": claims}
-        return self.session.post(Paths.ITEMS, json=json)
+        json = dict_merge(data, json)
+        return self.session.post(Paths.ENTITY_CREATE, json=json)
 
     def resolve_entity(self, **params):
         """
