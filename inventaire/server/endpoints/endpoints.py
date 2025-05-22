@@ -206,11 +206,38 @@ class EntitiesEndpoints(EndpointTemplate):
         """
         raise NotImplementedError
 
-    def update_claim(self, **params):
+    def update_claim(
+        self,
+        uri: str,
+        property: str,
+        old_value: str | None = None,
+        new_value: str | None = None,
+    ):
         """
         Update an entity's claim.
+
+        Parameters:
+            uri (str): An entity URI (e.g. 'wd:Q2196')
+            property (str): The claim's property URI (e.g. 'wdt:P50')
+            old_value (str, optional): The old value to be replaced. Can be omitted when intenting to create a new claim (e.g. 'wd:Q571')
+            new_value (str, optional): The new value to be replaced. Can be omitted when intenting to delete a claim. (e.g. 'wd:Q2831984')
+
+        Returns:
+            Response: The response object to the PUT request.
         """
-        raise NotImplementedError
+        params = {
+            "uri": uri,
+            "property": property,
+            **{
+                k: v
+                for k, v in {
+                    "old-value": old_value,
+                    "new-value": new_value,
+                }.items()
+                if v is not None
+            },
+        }
+        return self.session.put(Paths.ENTITY_UPDATE_CLAIM, json=params)
 
     def revert_merge(self, **params):
         """

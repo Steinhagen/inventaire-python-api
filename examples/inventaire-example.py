@@ -71,3 +71,11 @@ claims = {
 data = {"prefix": "inv"}
 collection_data = inv.api.entities.create_entity(labels={}, claims=claims, data=data)
 print(collection_data)
+
+# Add a new title to an entity (if it doesn't already exist)
+update_claim = inv.api.entities.update_claim(
+    uri="inv:b61d78a24bd6d4a55eaade78d548366a",
+    property="wdt:P856",
+    new_value="https://humanitas.ro/humanitas-fiction/colectii/cocktail",
+)
+print(update_claim)
