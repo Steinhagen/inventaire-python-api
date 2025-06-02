@@ -194,11 +194,44 @@ class EntitiesEndpoints(EndpointTemplate):
         json = dict_merge(data, json)
         return self.session.post(Paths.ENTITY_CREATE, json=json)
 
-    def resolve_entity(self, **params):
+    def resolve_entity(
+        self,
+        entries: list,
+        create: bool = True,
+        update: bool = True,
+        enrich: bool = True,
+        data: dict | None = None,
+    ):
         """
         Find if some entries match existing entities, and optionnaly update and/or enrich the existing entities, and/or create the missing ones.
+
+        Parameters:
+            entries (list): An object with a key "entries" and an array of objects as value. Each object can contain keys "edition", "works" and/or "authors". "edition" must be an object. "works" and "authors" must be arrays of one or several objects.
+            create (bool, optional): If True, non-resolved entities will be created.
+            update (bool, optional): If True, resolved entities will be updated.
+            enrich (bool, optional): If True, resolved entities might be enriched with corresponding data found from other data sources. For instance an edition cover might be added, based on the provided ISBN.
+            data (dict, optional): Additional parameters to include in the request.
+
+        Returns:
+            Response: The HTTP response object from the POST request.
         """
-        raise NotImplementedError
+        if data is None:
+            data = {}
+
+        params = {
+            "entries": entries,
+            **{
+                k: v
+                for k, v in {
+                    "create": str_bool(create),
+                    "update": str_bool(update),
+                    "enrich": str_bool(enrich),
+                }.items()
+                if v is not None
+            },
+        }
+        params = dict_merge(data, params)
+        return self.session.post(Paths.ENTITY_RESOLVE, json=params)
 
     def update_label(self, **params):
         """
