@@ -81,3 +81,7 @@ class InventairePaths:
     DATA_WP_EXTRACT = "data?action=wp-extract"
     DATA_ISBN = "data?action=isbn"
     DATA_PROPERTY_VALUES = "data?action=property-values"
+
+    # Images
+    IMAGES_DATA_URL = "images?action=data-url"
+    IMAGES_UPLOAD = "images?action=upload"

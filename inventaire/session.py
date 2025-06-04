@@ -124,3 +124,30 @@ class InventaireSession:
         :return: response json, empty str or raw response
         """
         return self._request("delete", endpoint, **kwargs)
+
+    def post_image(
+        self,
+        endpoint: str,
+        file_path: str | None = None,
+        file_bytes: bytes | None = None,
+        filename: str = "upload.jpg",
+        content_type: str = "image/jpeg",
+        **kwargs,
+    ):
+        """
+        Post wrapper to send an image. Can use either a file path or raw file bytes.
+        """
+        if file_path:
+            with open(file_path, "rb") as file:
+                files = {"file-1": (filename or file_path, file, content_type)}
+                return self._request("post", endpoint, files=files, **kwargs)
+
+        elif file_bytes:
+            from io import BytesIO
+
+            file = BytesIO(file_bytes)
+            files = {"file-1": (filename, file, content_type)}
+            return self._request("post", endpoint, files=files, **kwargs)
+
+        else:
+            raise ValueError("Either file_path or file_bytes must be provided.")

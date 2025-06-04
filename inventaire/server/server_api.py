@@ -51,3 +51,7 @@ class InventaireApiWrapper:
     @property
     def data(self):
         return endpoints.DataEndpoints(self.session)
+
+    @property
+    def images(self):
+        return endpoints.ImagesEndpoints(self.session)

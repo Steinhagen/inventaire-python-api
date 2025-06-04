@@ -79,3 +79,26 @@ update_claim = inv.api.entities.update_claim(
     new_value="https://humanitas.ro/humanitas-fiction/colectii/cocktail",
 )
 print(update_claim)
+
+# The complete code to update the cover image of a entity
+import base64
+
+# Get the desired image base64 data
+image_b64 = inv.api.images.get_data_url(
+    url="https://humanitas.ro/assets/images/products/Oracolul-noptii.jpg"
+)
+print(image_b64)
+
+# Upload the image to the inventaire server
+b64_data = image_b64["data-url"].split(",")[1]
+image_bytes = base64.b64decode(b64_data)
+upload_resp = inv.api.images.upload(image_data=image_bytes)
+print(upload_resp)
+
+# Update the inventaire entity with the new image
+update_claim = inv.api.entities.update_claim(
+    uri="isbn:9789735023720",
+    property="invp:P2",
+    new_value=upload_resp["file-1"].split("/")[-1],
+)
+print(update_claim)
