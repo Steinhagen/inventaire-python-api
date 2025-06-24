@@ -13,6 +13,24 @@ class EndpointTemplate:
         self.session = session
 
 
+class ActivityPubEndpoints(EndpointTemplate):
+    """
+    API wrapper for ActivityPubEndpoints.
+    """
+
+    def get_activity(self, id: str):
+        """
+        Authenticate a user with the provided credentials.
+
+        Args:
+            id (str): An activity id. Example : 9f25f75dba901ddb9817c3e4bf001d85
+
+        Returns:
+            Response: The response object resulting from the GET request.
+        """
+        raise NotImplementedError
+
+
 class AuthEndpoints(EndpointTemplate):
     """
     Api wrapper for Auth. Login and stuffs. See:
@@ -271,6 +289,23 @@ class EntitiesEndpoints(EndpointTemplate):
             },
         }
         return self.session.put(Paths.ENTITY_UPDATE_CLAIM, json=params)
+
+    def merge(self, from_entity: str, to_entity: str):
+        """
+        [authentified] Merge two entities.
+
+        Parameters:
+            from_entity (str): The uri from the local entity to be merged. Example: inv:9f25f75dba901ddb9817c3e4bf001d85
+            to_entity (str): The uri from the local or remote entity in which the local "from" entity should be merged. Example: wd:Q191949
+
+        Returns:
+            Response: The response object to the PUT request.
+        """
+        params = {
+            "from": from_entity,
+            "to": to_entity,
+        }
+        return self.session.put(Paths.ENTITY_MERGE, json=params)
 
     def revert_merge(self, **params):
         """

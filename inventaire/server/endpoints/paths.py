@@ -25,6 +25,7 @@ class InventairePaths:
     ENTITY_RESOLVE = "entities?action=resolve"
     ENTITY_UPDATE_LABEL = "entities?action=update-label"
     ENTITY_UPDATE_CLAIM = "entities?action=update-claim"
+    ENTITY_MERGE = "entities?action=merge"
     ENTITY_REVERT_MERGE = "entities?action=revert-merge"
     ENTITY_BY_URIS = "entities?action=by-uris"
     ENTITY_LAST_CHANGES = "entities?action=changes"
