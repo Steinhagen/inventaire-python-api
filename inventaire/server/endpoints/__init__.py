@@ -1,4 +1,13 @@
-from .endpoints import (ActivityPubEndpoints, AuthEndpoints, DataEndpoints,
-                        EntitiesEndpoints, GroupsEndpoints, ImagesEndpoints,
-                        ItemsEndpoints, SearchEndpoints, ShelvesEndpoints,
-                        TransactionsEndpoints, UserEndpoints, UsersEndpoints)
+from .activity_pub import ActivityPubEndpoints
+from .auth import AuthEndpoints
+from .data import DataEndpoints
+from .entities import EntitiesEndpoints
+from .groups import GroupsEndpoints
+from .images import ImagesEndpoints
+from .invitations import InvitationsEndpoints
+from .items import ItemsEndpoints
+from .search import SearchEndpoints
+from .shelves import ShelvesEndpoints
+from .transactions import TransactionsEndpoints
+from .user import UserEndpoints
+from .users import UsersEndpoints

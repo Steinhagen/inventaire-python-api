@@ -37,7 +37,10 @@ class InventaireApiWrapper:
         return endpoints.ImagesEndpoints(self.session)
 
     # FIXME instances
-    # FIXME invitations
+
+    @property
+    def invitations(self):
+        return endpoints.InvitationsEndpoints(self.session)
 
     @property
     def items(self):
