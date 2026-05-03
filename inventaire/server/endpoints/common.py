@@ -26,5 +26,5 @@ class EndpointTemplate:
             raise ValueError("The base path for this endpoint was not set!")
 
         if action:
-            return f"{base}?action={action}"
+            return f"{base}/{action}"
         return base

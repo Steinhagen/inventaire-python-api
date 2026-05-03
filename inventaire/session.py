@@ -7,7 +7,7 @@ import logging
 from requests import HTTPError, Session
 
 INIT_SESSION_MSG = "Initialize session by {}"
-LOGIN_PATH = "/auth?action=login"
+LOGIN_PATH = "/auth/login"
 
 
 class InvalidAuthData(Exception):
