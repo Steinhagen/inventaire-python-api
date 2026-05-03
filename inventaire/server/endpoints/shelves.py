@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from inventaire.utils.common import dict_merge
 
 from .common import EndpointTemplate
@@ -20,7 +22,8 @@ class ShelvesEndpoints(EndpointTemplate):
         Retrieve shelf data for the given shelf IDs.
 
         Args:
-            ids (str or list[str]): A shelf ID separated by pipes as a string or a list of shelf IDs.
+            ids (str or list[str]): A shelf ID separated by pipes
+                as a string or a list of shelf IDs.
 
         Returns:
             Response: The response object resulting from the GET request to the shelves endpoint.
@@ -33,7 +36,8 @@ class ShelvesEndpoints(EndpointTemplate):
         Retrieve shelf data for the given owners ID.
 
         Args:
-            ids (str or list[str]): A owner ID separated by pipes as a string or a list of owner IDs.
+            ids (str or list[str]): A owner ID separated by pipes
+                as a string or a list of owner IDs.
 
         Returns:
             Response: The response object resulting from the GET request to the shelves endpoint.
@@ -65,7 +69,7 @@ class ShelvesEndpoints(EndpointTemplate):
 
     def update_shelf(
         self,
-        id: str,
+        shelf_id: str,
         name: str,
         listing: str,
         description: str | None = None,
@@ -75,7 +79,7 @@ class ShelvesEndpoints(EndpointTemplate):
         Update an existing shelf with the given details.
 
         Args:
-            id (str): The shelf ID.
+            shelf_id (str): The shelf ID.
             name (str): The name of the shelf.
             listing (str): The shelf visibility listing: one of private, network, or public.
             description (str, optional): A description of the shelf.
@@ -87,18 +91,18 @@ class ShelvesEndpoints(EndpointTemplate):
         if data is None:
             data = {}
 
-        json = {"id": id, "name": name, "listing": listing}
+        json = {"id": shelf_id, "name": name, "listing": listing}
         if description:
             json["description"] = description
         merged_json = dict_merge(data, json)
         return self.session.post(self._path("update"), json=merged_json)
 
-    def delete_shelf(self, id: str, data: dict | None = None):
+    def delete_shelf(self, shelf_id: str, data: dict | None = None):
         """
         Delete an existing shelf.
 
         Args:
-            id (str): The shelf ID.
+            shelf_id (str): The shelf ID.
             data (dict, optional): Additional data to merge into the request payload.
 
         Returns:
@@ -107,7 +111,7 @@ class ShelvesEndpoints(EndpointTemplate):
         if data is None:
             data = {}
 
-        json = {"id": id}
+        json = {"id": shelf_id}
         merged_json = dict_merge(data, json)
         return self.session.post(self._path("delete"), json=merged_json)
 

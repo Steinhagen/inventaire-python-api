@@ -27,9 +27,13 @@ class ItemsEndpoints(EndpointTemplate):
         Create an item.
 
         Parameters:
-            entity (str): The associated book entity (work or edition) uri (e.g. 'isbn:9782253138938').
-            transaction (str): The item transaction: one of giving, lending, selling, or inventorying. Defaults to inventorying.
-            listing (str): The item visibility listing: one of private, network, or public. Defaults to private.
+            entity (str): The associated book entity (work or
+                edition) uri (e.g. 'isbn:9782253138938').
+            transaction (str): The item transaction: one of giving,
+                lending, selling, or inventorying.
+                Defaults to inventorying.
+            listing (str): The item visibility listing: one of
+                private, network, or public. Defaults to private.
             lang (str, optional): 2-letters language code.
             details (str, optional): Free text to be visible by anyone allowed to see the item.
             notes (str, optional): Free text that is visible only by the item owner.

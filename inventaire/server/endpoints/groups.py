@@ -11,7 +11,7 @@ class GroupsEndpoints(EndpointTemplate):
         super().__init__(session)
         self.base_path = "groups"
 
-    def get_groups(self, **params):
+    def get_groups(self):
         """
         Get all the groups the authentified user is a member of.
 
@@ -20,17 +20,17 @@ class GroupsEndpoints(EndpointTemplate):
         """
         return self.session.get(self._path())
 
-    def get_group_by_id(self, id: str):
+    def get_group_by_id(self, group_id: str):
         """
         Get a group by its id.
 
         Args:
-            id (str): A group id (e. g. '85d797f862e362335f3e6144cc12568a').
+            group_id (str): A group id (e. g. '85d797f862e362335f3e6144cc12568a').
 
         Returns:
             Response: The response object from the GET request.
         """
-        params = {"id": id}
+        params = {"id": group_id}
         return self.session.get(self._path("by-id"), params=params)
 
     def get_group_by_slug(self, slug: str):

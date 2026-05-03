@@ -34,4 +34,4 @@ def str_bool(boolean: bool | None) -> str | None:
     """
     Convert a Python boolean type into a typescript boolean type
     """
-    return str(boolean).lower() if type(boolean) is bool else boolean
+    return str(boolean).lower() if isinstance(boolean, bool) else boolean

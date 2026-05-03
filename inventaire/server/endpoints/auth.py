@@ -20,7 +20,8 @@ class AuthEndpoints(EndpointTemplate):
             password (str): The user's password.
 
         Returns:
-            Response: The response object resulting from the POST request to the authentication endpoint.
+            Response: The response object resulting from the
+                POST request to the authentication endpoint.
         """
         json = {"username": username, "password": password}
         return self.session.post(self._path("login"), json=json)

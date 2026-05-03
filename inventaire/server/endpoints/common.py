@@ -13,8 +13,13 @@ class EndpointTemplate:
         Return the API endpoint for a specific function.
 
         Args:
-            action (str, optional): The action for the API endpoint. If None, the return will be only the base API endpoint. Example: "create"
-            base (str, optional): Force a different base API endpoint than the one the class uses. Normally, you wouldn't need to do this. Example: "data-experimental"
+            action (str, optional): The action for the API
+                endpoint. If None, the return will be only the
+                base API endpoint. Example: "create"
+            base (str, optional): Force a different base API
+                endpoint than the one the class uses. Normally,
+                you wouldn't need to do this.
+                Example: "data-experimental"
 
         Returns:
             Response: The response object resulting from the GET request.
