@@ -3,6 +3,7 @@ A module for Inventaire session object.
 """
 
 import logging
+from io import BytesIO
 
 from requests import HTTPError, Session
 
@@ -27,7 +28,7 @@ class InventaireSession:
     :param keyword session_attrs: a dict with session attrs to be set as keys and their values
     """
 
-    def __init__(
+    def __init__(  # pylint: disable=unused-argument
         self, base_url, token=None, username=None, password=None, cookies=None, **kwargs
     ):
         self.base_url = base_url
@@ -143,8 +144,6 @@ class InventaireSession:
                 return self._request("post", endpoint, files=files, **kwargs)
 
         elif file_bytes:
-            from io import BytesIO
-
             file = BytesIO(file_bytes)
             files = {"file-1": (filename, file, content_type)}
             return self._request("post", endpoint, files=files, **kwargs)

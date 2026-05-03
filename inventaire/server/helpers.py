@@ -14,27 +14,36 @@ class InventaireHelpers:
     def create_entity_claims(
         self,
         instance_of: str | list[str],
-        illustrator: str | list[str] = [],
-        author: str | list[str] = [],
-        editor: str | list[str] = [],
+        illustrator: str | list[str] = None,
+        author: str | list[str] = None,
+        editor: str | list[str] = None,
     ):
         """
         Make the claim dictionary needed to create a new entity.
 
         Parameters:
-            instance_of (str or list[str]): Type to which this subject corresponds/belongs (e.g., 'wd:Q47461344').
-            illustrator (str or list[str]): Person drawing the pictures or taking the photographs in a book or similar work.
-            author (str or list[str]): Main creator(s) of a written work (use on works, not humans).
-            editor (str or list[str]): Person who checks and corrects a work (such as a book, newspaper, academic journal, etc.) to comply with a rules of certain genre.
+            instance_of (str or list[str]): Type to which this
+                subject corresponds/belongs
+                (e.g., 'wd:Q47461344').
+            illustrator (str or list[str]): Person drawing the
+                pictures or taking the photographs in a book
+                or similar work.
+            author (str or list[str]): Main creator(s) of a
+                written work (use on works, not humans).
+            editor (str or list[str]): Person who checks and
+                corrects a work (such as a book, newspaper,
+                academic journal, etc.) to comply with a rules
+                of certain genre.
 
         Returns:
-            dict: Returns claim dictionary needed for api.entities.create_entity.
+            dict: Returns claim dictionary needed for
+                api.entities.create_entity.
         """
 
-        instance_of = [instance_of] if isinstance(instance_of, str) else instance_of
-        illustrator = [illustrator] if isinstance(illustrator, str) else illustrator
-        author = [author] if isinstance(author, str) else author
-        editor = [editor] if isinstance(editor, str) else editor
+        instance_of = [instance_of] if isinstance(instance_of, str) else instance_of or []
+        illustrator = [illustrator] if isinstance(illustrator, str) else illustrator or []
+        author = [author] if isinstance(author, str) else author or []
+        editor = [editor] if isinstance(editor, str) else editor or []
         return {
             "wdt:P31": instance_of,
             "wdt:P110": illustrator,
@@ -49,7 +58,11 @@ class InventaireHelpers:
         Returns:
             Response: The HTTP response object from the GET request.
         """
-        types = "wd:Q47461344|wd:Q7725634|wd:Q1004|wd:Q725377|wd:Q25379|wd:Q49084|wd:Q8274|wd:Q562214"
+        types = (
+            "wd:Q47461344|wd:Q7725634|wd:Q1004"
+            "|wd:Q725377|wd:Q25379|wd:Q49084"
+            "|wd:Q8274|wd:Q562214"
+        )
         return endpoints.EntitiesEndpoints(self.session).get_entities_by_uris(
             uris=types
         )

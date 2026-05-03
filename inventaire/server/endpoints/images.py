@@ -30,7 +30,7 @@ class ImagesEndpoints(EndpointTemplate):
         image_path: str | None = None,
         image_data: bytes | None = None,
         container: str = "entities",
-        hash: bool = True,
+        use_hash: bool = True,
     ):
         """
         Upload an image cover to a entity.
@@ -38,13 +38,14 @@ class ImagesEndpoints(EndpointTemplate):
         Args:
             image_path (str): Path to the cover image.
             image_data (str): Base64 of the desired image.
-            container (str, optional): Location where the image gets uploaded. Default value: "entities"
-            hash (bool, optional): Default value: "True"
+            container (str, optional): Location where the image
+                gets uploaded. Default value: "entities"
+            use_hash (bool, optional): Default value: "True"
 
         Returns:
             Response: The response object resulting from the POST request.
         """
-        params = {"container": container, "hash": str_bool(hash)}
+        params = {"container": container, "hash": str_bool(use_hash)}
         return self.session.post_image(
             self._path("upload"),
             file_path=image_path,

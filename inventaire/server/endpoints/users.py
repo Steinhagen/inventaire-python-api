@@ -29,7 +29,8 @@ class UsersEndpoints(EndpointTemplate):
         Users by usernames.
 
         Args:
-            usernames (str or list[str]): Usernames separated by pipes as a string or a list usernames.
+            usernames (str or list[str]): Usernames separated by
+                pipes as a string or a list usernames.
 
         Returns:
             Response: The response object resulting from the GET request.

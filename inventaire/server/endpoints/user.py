@@ -25,7 +25,8 @@ class UserEndpoints(EndpointTemplate):
         Update the authentified user.
 
         Args:
-            attribute (str): The attribute to update (username, email, language, bio, settings, position).
+            attribute (str): The attribute to update
+                (username, email, language, bio, settings, position).
             value (str): The new value to give to this attribute.
 
         Returns:

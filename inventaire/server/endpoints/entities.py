@@ -7,7 +7,8 @@ class EntitiesEndpoints(EndpointTemplate):
     """
     Api wrapper for Entities. Think books, authors, series data. See:
     - entities map: https://inventaire.github.io/entities-map/
-    - code: https://github.com/inventaire/inventaire/blob/master/server/controllers/entities/entities.js
+    - code: https://github.com/inventaire/inventaire/blob/master/
+      server/controllers/entities/entities.js
     """
 
     def __init__(self, session):
@@ -29,8 +30,9 @@ class EntitiesEndpoints(EndpointTemplate):
                   "en": "that entity's label in English",
                   "fr": "le label de cette entité en français"
                 }
-            claims (dict): An object with properties URIs as keys, and, as value, the associated array of claim values. e.g.:
-                { "wdt:P31": [ "wd:Q571" ] }
+            claims (dict): An object with properties URIs as keys,
+                and, as value, the associated array of claim values.
+                e.g.: { "wdt:P31": [ "wd:Q571" ] }
             data (dict, optional): Additional parameters to include in the request.
 
         Returns:
@@ -52,13 +54,22 @@ class EntitiesEndpoints(EndpointTemplate):
         data: dict | None = None,
     ):
         """
-        Find if some entries match existing entities, and optionnaly update and/or enrich the existing entities, and/or create the missing ones.
+        Find if some entries match existing entities, and optionnaly
+        update and/or enrich the existing entities, and/or create
+        the missing ones.
 
         Parameters:
-            entries (list): An object with a key "entries" and an array of objects as value. Each object can contain keys "edition", "works" and/or "authors". "edition" must be an object. "works" and "authors" must be arrays of one or several objects.
+            entries (list): An object with a key "entries" and an
+                array of objects as value. Each object can contain
+                keys "edition", "works" and/or "authors". "edition"
+                must be an object. "works" and "authors" must be
+                arrays of one or several objects.
             create (bool, optional): If True, non-resolved entities will be created.
             update (bool, optional): If True, resolved entities will be updated.
-            enrich (bool, optional): If True, resolved entities might be enriched with corresponding data found from other data sources. For instance an edition cover might be added, based on the provided ISBN.
+            enrich (bool, optional): If True, resolved entities might
+                be enriched with corresponding data found from other
+                data sources. For instance an edition cover might be
+                added, based on the provided ISBN.
             data (dict, optional): Additional parameters to include in the request.
 
         Returns:
@@ -91,7 +102,7 @@ class EntitiesEndpoints(EndpointTemplate):
     def update_claim(
         self,
         uri: str,
-        property: str,
+        prop: str,
         old_value: str | None = None,
         new_value: str | None = None,
     ):
@@ -100,16 +111,20 @@ class EntitiesEndpoints(EndpointTemplate):
 
         Parameters:
             uri (str): An entity URI (e.g. 'wd:Q2196')
-            property (str): The claim's property URI (e.g. 'wdt:P50')
-            old_value (str, optional): The old value to be replaced. Can be omitted when intenting to create a new claim (e.g. 'wd:Q571')
-            new_value (str, optional): The new value to be replaced. Can be omitted when intenting to delete a claim. (e.g. 'wd:Q2831984')
+            prop (str): The claim's property URI (e.g. 'wdt:P50')
+            old_value (str, optional): The old value to be replaced.
+                Can be omitted when intenting to create a new claim
+                (e.g. 'wd:Q571').
+            new_value (str, optional): The new value to be replaced.
+                Can be omitted when intenting to delete a claim.
+                (e.g. 'wd:Q2831984')
 
         Returns:
             Response: The response object to the PUT request.
         """
         params = {
             "uri": uri,
-            "property": property,
+            "property": prop,
             **{
                 k: v
                 for k, v in {
@@ -126,8 +141,12 @@ class EntitiesEndpoints(EndpointTemplate):
         [authentified] Merge two entities.
 
         Parameters:
-            from_entity (str): The uri from the local entity to be merged. Example: inv:9f25f75dba901ddb9817c3e4bf001d85
-            to_entity (str): The uri from the local or remote entity in which the local "from" entity should be merged. Example: wd:Q191949
+            from_entity (str): The uri from the local entity to be
+                merged. Example:
+                inv:9f25f75dba901ddb9817c3e4bf001d85
+            to_entity (str): The uri from the local or remote entity
+                in which the local "from" entity should be merged.
+                Example: wd:Q191949
 
         Returns:
             Response: The response object to the PUT request.
@@ -191,7 +210,9 @@ class EntitiesEndpoints(EndpointTemplate):
         Get popularity score of an entity.
 
         Args:
-            uris (str or list[str]): A title, author, or ISBN separated by pipes or a list of elements (e.g., 'wd:Q3203603|isbn:9782290349229|inv:d59e3e64f92c6340fbb10c5dcf437d86').
+            uris (str or list[str]): A title, author, or ISBN
+                separated by pipes or a list of elements (e.g.,
+                'wd:Q3203603|isbn:9782290349229').
             refresh (bool, optional): Request non-cached data. Defaults to 'False'.
 
         Returns:
@@ -202,22 +223,24 @@ class EntitiesEndpoints(EndpointTemplate):
             params["refresh"] = str_bool(refresh)
         return self.session.get(self._path("popularity"), params=params)
 
-    def get_history(self, id: str):
+    def get_history(self, entity_id: str):
         """
         Get entities history as snapshots and diffs.
 
         Args:
-            id (str): An (internal) entity id (e. g., 'd59e3e64f92c6340fbb10c5dcf437d86').
+            entity_id (str): An (internal) entity id
+                (e. g., 'd59e3e64f92c6340fbb10c5dcf437d86').
 
         Returns:
             Response: The response object from the GET request.
         """
-        params = {"id": id}
+        params = {"id": entity_id}
         return self.session.get(self._path("history"), params=params)
 
     def get_author_works(self, uri: str, refresh: bool = False):
         """
-        Pass an author URI, get uris of all works, series and articles of the entity that match this claim
+        Pass an author URI, get uris of all works, series and
+        articles of the entity that match this claim.
 
         Args:
             uri (str): An author URI (e. g. 'wd:Q2196').

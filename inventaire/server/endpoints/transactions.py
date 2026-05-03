@@ -4,7 +4,8 @@ from .common import EndpointTemplate
 class TransactionsEndpoints(EndpointTemplate):
     """
     Api wrapper for Transactions. When users request each others items. See:
-    - code: https://github.com/inventaire/inventaire/blob/master/server/controllers/transactions/transactions.js
+    - code: https://github.com/inventaire/inventaire/blob/master/
+      server/controllers/transactions/transactions.js
     """
 
     def __init__(self, session):

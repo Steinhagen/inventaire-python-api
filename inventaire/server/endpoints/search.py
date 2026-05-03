@@ -24,12 +24,16 @@ class SearchEndpoints(EndpointTemplate):
         data: dict | None = None,
     ):
         """
-        Search for entities (works, humans, genres, publishers, series, collections), users, or groups.
+        Search for entities (works, humans, genres, publishers,
+        series, collections), users, or groups.
 
         Parameters:
             search (str): The search term or query string.
-            types (str): A pipe-separated string of entity types to search for
-                         (possible values: works, humans, genres, publishers, series, collections, genres, movements, languages, users, groups, shelves, lists). Defaults to "works|series|humans".
+            types (str): A pipe-separated string of entity types to
+                search for (possible values: works, humans, genres,
+                publishers, series, collections, genres, movements,
+                languages, users, groups, shelves, lists).
+                Defaults to "works|series|humans".
             limit (int, optional): Maximum number of results to return.
             lang (str, optional): Language code to filter results by language.
             exact (bool, optional): If True, perform an exact match search.

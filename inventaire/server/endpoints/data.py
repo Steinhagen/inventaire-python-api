@@ -39,16 +39,16 @@ class DataEndpoints(EndpointTemplate):
         params = {"isbn": isbn}
         return self.session.get(self._path("isbn"), params=params)
 
-    def get_property_values(self, property: str, type: str):
+    def get_property_values(self, prop: str, entity_type: str):
         """
         Return the allowed values per type for a given property.
 
         Args:
-            property (str): A property (e. g., 'wdt:P31').
-            type (str): A type from lib/wikidata/aliases (e. g., 'series').
+            prop (str): A property (e. g., 'wdt:P31').
+            entity_type (str): A type from lib/wikidata/aliases (e. g., 'series').
 
         Returns:
             Response: The response object from the GET request.
         """
-        params = {"property": property, "type": type}
+        params = {"property": prop, "type": entity_type}
         return self.session.get(self._path("property-values"), params=params)
