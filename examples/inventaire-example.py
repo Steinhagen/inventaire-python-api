@@ -48,7 +48,7 @@ print(search_data)
 
 # Get entity details and if it doesn't exist, try to create it
 uri_details = inv.api.entities.get_entities_by_uris(
-    uris="isbn:9789735087180",
+    uris="wd:Q139604761",
     autocreate=True,
     refresh=True,
 )
@@ -85,7 +85,7 @@ import base64
 
 # Get the desired image base64 data
 image_b64 = inv.api.images.get_data_url(
-    url="https://humanitas.ro/assets/images/products/Oracolul-noptii.jpg"
+    url="https://humanitas.ro/assets/images/products/Revolverul-arhanghelului.jpg"
 )
 print(image_b64)
 
@@ -97,7 +97,7 @@ print(upload_resp)
 
 # Update the inventaire entity with the new image
 update_claim = inv.api.entities.update_claim(
-    uri="isbn:9789735023720",
+    uri="wd:Q139604761",
     property="invp:P2",
     new_value=upload_resp["file-1"].split("/")[-1],
 )
